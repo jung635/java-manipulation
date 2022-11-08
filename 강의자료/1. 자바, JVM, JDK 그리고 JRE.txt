@@ -1,0 +1,30 @@
+1. JVM
+- 자바 바이트 코드를 어떻게 실행할지에 대한 표준 스펙이고, 구현체로 이해할 수 있다.
+
+vim HelloJava.java
+javac HelloJava.java -> HelloJava.class 생성됨
+javap -c HelloJava시 나오는 코드들이 바이트 코드
+
+이 바이트 코드들을 실행하는게 인터프리터와 JIT 컴파일러를 써서 native OS에 맞춰서 머신코드(머신이 이해할 수 있는)로 변경한다음 실행한다.
+JVM은 클래스를 읽어들이고, 메모리에 올리고(메모리도 여러가지로 나눠져있음), 실행한다.
+구현체는 다양하다.
+플랫폼에 종속적이다. 네이티브 코드로 바꿔서 실행해야하는데 네이티브 코드가 OS에 맞춰서 실행해야하기 때문에.
+
+JVM혼자 배포되지 않고, 최소한의 배포단위가 JRE
+
+2. JRE
+자바 애플리케이션을 실행하는 것에 필요한것만 포함하고 있음(tool은 미포함)
+javac(java compiler)는 들어있지 않음 - 컴파일러는 JDK에 포함
+
+3. JDK
+
+오라클 밴더 JDK 11 버전부터 상용으로 사용할 때 유료
+
+
+class만 만들어지면 JVM을 통해 실행 할 수 있다. 따라서 JVM 기반 언어로 작성하고 컴파일 하면 class가 생성되고 JVM 기반으로 실행 가능
+하지만 추가적으로 필요한 클래스가 있을 수 있고, jar로 패키지해서 실행해야 할 수도 있음 (ex. kotlin)
+vim Hello.kt
+kotlinc Hello.kt -> HelloKt.class 생성
+javap -c HelloKt -> 바이트 코드 나옴
+kotlinc Hello.kt -include-runtime -d hello.jar
+java -jar hello.jar

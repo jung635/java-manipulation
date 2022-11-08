@@ -1,0 +1,35 @@
+1. 클래스 로드 시스템 - 컴파일한 클래스 코드 같은 것들을 읽어들이고 메모리에 적절히 배치함
+아래와 같은 static 값들을 초기화
+static String myName
+static {
+    myName = "sunju"
+}
+
+2. 메모리
+- 메소드 영역이 중요함
+아무것도 상속받은게 없으면 Object 상속을 받는것
+System.out.println(App.class.getSuperclass()); -> class java.lang.Object로 출력
+- heap: 인스턴스(객체) 저장 (App app = new App();)
+- 메소드, heap외 나머지 블록은 스레드에 국한되어 공유된다.
+- Stack: 스레드 마다 만들어짐
+스택 프레임: 메서드 콜 (에러메시지 보면 stack이 쌓여있음)
+- PC: 스택 프레임을 쌓았는데 현재 어느 위치를 실행하고 있는지 가리킴
+- 네이티브 메소드 스택: 네이티브 메소드 호출할 때 사용하는 별도의 메소드 스택
+
+네이티브 메소드 라이브러리를 쓰려면 네이티브 메소드 인터페이스(JNI)를 통해야하고, JNI를 사용하는 메소드 스택은 네이티브 메소드 스택에 저장이됨
+네이티브 메소드
+메소드에 native가 붙어있고 구현을 자바가 아닌 C나 C++로 한것.
+Thread.currentThread(); -> C로 구현되어 있음
+까보면 public static native Thread currentThread(); -> JNI라고 부르고, 구현된 것을 네이티브 메소드 라이브러리라고 부름
+
+한줄한줄 실행하면서 native 코드로 기계가 이해할 수 있게 바꿔서 실행
+한줄마다 native 언어로 컴파일해서 실행
+똑같은 코드가 나와도 매번 네이티브 코드로 바꾸면 비효율적임
+JIT: 바이트 코드를 native코드로 컴파일
+반복된 코드를 전부 찾아서 미리 바꿔둔다.
+인터프리터가 해당 라인에 걸렸을때 바꿔둔 네이티브 코드를 바로 사용
+
+GC
+-throughput 위주의 gc
+- start up world?을 줄이는 gc
+서버 운영중 많은 객체를 생성하고 response time이 중요하다 (pause현상을 최소화하는 gc를 사용하는게 좋다)

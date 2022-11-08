@@ -1,0 +1,23 @@
+여러개 클래스 로더들이 부모 자식 관계를 맺고 로딩을함
+
+- 로딩
+FQCN: Fully Qulified class name (package 경로+클래스이름+클래스로더까지 포함한)
+Class 객체
+Whiteship.class
+Whiteship witeship = new Whiteship();
+Whiteship.getClass()
+Class<Whiteship>
+로더
+클래스 로더는 계층형 구조
+class parent는 PlatformClassLoader
+PlatformClassLoader의 parent는 bootstrap인데 native로 구현되었기 때문에 null로 나옴
+각각의 boot 클래스 로더가 classpath에 들어있는 class들만 읽어줌
+젤 부모에 먼저 읽고, 못읽으면 자식이 읽고 쭉 내려가다 못 읽으면 ClassNotFoundException이 발생
+
+- 링크
+preparation: 메모리를 준비하는 과정
+resolve: 이때 발생하는 것은 optional, 나중에 실제 레퍼런스를 사용할 때 발생 할 수도 있음
+심볼릭 메모리 레퍼런스: Book book =new Boot(); book에 대한 레퍼런스는 실제 레퍼런스하고 있지는 않고 논리적 레퍼런스.
+실제 heap에 들어있는 레퍼런스를 가르킬때 발생할 수도 있다는 말.
+
+
